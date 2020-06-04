@@ -1,7 +1,8 @@
 #pragma once
-#include"timePeriod.h"
+#include"Date.h"
 #include"User.h"
 #include"Vector.h"
+#include<iostream>
 
 class Destination
 {
@@ -11,7 +12,6 @@ private:
 	Date time;
 	int grade;
 	char* comment;
-	Vector<User> attendedUser;
 	Vector<char*> photos;
 
 	void copy(const Destination& other);
@@ -32,5 +32,15 @@ public:
 
 	void setComment(const char* newComment);
 	const char* getComment() const;
+
+	void setTime(Date newTime);
+	Date getTime() const;
+
+	bool operator==(const Destination& another);
+	void print(Vector<Destination> dest);
+
+	friend std::ostream& operator<<(std::ostream& out, const Destination& current);
+	friend std::istream& operator>>(std::istream& in, Destination& current);
 };
+
 

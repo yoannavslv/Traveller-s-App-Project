@@ -1,4 +1,5 @@
 #include "User.h"
+#include<fstream>
 
 void User::copy(const User& other)
 {
@@ -14,14 +15,14 @@ void User::destroy()
 	delete[] this->email;
 }
 
-User::User()
+User::User() : userName(nullptr), password(nullptr), email(nullptr)
 {
 	this->setUserName("Unknown");
 	this->setPassword("Default");
 	this->setEmail("Unknown");
 }
 
-User::User(const User& other)
+User::User(const User& other) : userName(nullptr), password(nullptr), email(nullptr)
 {
 	copy(other);
 }
@@ -49,7 +50,7 @@ User::User(const char* newUserName, const char* newPassword, const char* newEmai
 
 void User::setUserName(const char* newUsername)
 {
-	if (newUsername != NULL)
+	if (newUsername != nullptr)
 	{
 		delete[] this->userName;
 		this->userName = new char[strlen(newUsername) + 1];
@@ -64,7 +65,7 @@ const char* User::getUserName() const
 
 void User::setPassword(const char* newPassword)
 {
-	if (newPassword != NULL)
+	if (newPassword != nullptr)
 	{
 		delete[] this->password;
 		this->password = new char[strlen(newPassword) + 1];
@@ -79,7 +80,7 @@ const char* User::getPassword() const
 
 void User::setEmail(const char* newEmail)
 {
-	if (newEmail != NULL)
+	if (newEmail != nullptr)
 	{
 		delete[] this->email;
 		this->email = new char[strlen(newEmail) + 1];
@@ -94,26 +95,22 @@ const char* User::getEmail() const
 
 std::ostream& operator<<(std::ostream& out, const User& current)
 {
-	out << "Username: " << current.userName << std::endl
-		<< "Password: " << current.password << std::endl
-		<< "Email: " << current.email << std::endl;
+	out << current.userName << std::endl
+		<< current.password << std::endl
+		<< current.email << std::endl;
 
 	return out;
 }
 
 std::istream& operator>>(std::istream& in, User& current)
 {
-	std::cout << "Username: ";
-	in.get();
-	in.getline(current.userName, 128);
-
-	std::cout << "Password: ";
-	in.get();
-	in.getline(current.password, 128);
-
-	std::cout << "Email: ";
-	in.get();
-	in.getline(current.email, 128);
+	char text[128];
+	in >> text;
+	current.setUserName(text);
+	in >> text;
+	current.setPassword(text);
+	in >> text;
+	current.setEmail(text);
 
 	return in;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-template <class T>
+template <typename T>
 class Vector
 {
 private:
@@ -24,15 +24,20 @@ public:
 	void swap(size_t first, size_t second);
 	void push(const T& another);
 	void push_back(const T& another);
-	size_t length() const;
-	void print() const;
+	size_t length();
 
-	friend std::ostream& operator<<(std::ostream& stream, Vector<T> vector);
+	friend std::ostream& operator<<(std::ostream& out, Vector<T> vector)
+	{
+		for (size_t i = 0; i < vector.length(); i++)
+		{
+			out << vector[i] << std::endl;
+		}
+		return out;
+	}
 };
 
-
-template<class T>
-inline void Vector<T>::copy(const Vector& another)
+template<typename T>
+void Vector<T>::copy(const Vector<T>& another)
 {
 	this->object = new T[another.size];
 	for (size_t i = 0; i < another.size; i++)
@@ -42,27 +47,27 @@ inline void Vector<T>::copy(const Vector& another)
 	this->size = another.size;
 }
 
-template<class T>
-inline void Vector<T>::destroy()
+template<typename T>
+void Vector<T>::destroy()
 {
 	delete[] this->object;
 }
 
-template<class T>
+template<typename T>
 Vector<T>::Vector()
 {
 	this->object = nullptr;
 	this->size = 0;
 }
 
-template<class T>
-Vector<T>::Vector(const Vector& another)
+template<typename T>
+Vector<T>::Vector(const Vector<T>& another)
 {
 	copy(another);
 }
 
-template<class T>
-Vector<T>& Vector<T>::operator=(const Vector& another)
+template<typename T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& another)
 {
 	if (this != &another)
 	{
@@ -72,31 +77,31 @@ Vector<T>& Vector<T>::operator=(const Vector& another)
 	return *this;
 }
 
-template<class T>
+template<typename T>
 Vector<T>::~Vector()
 {
 	destroy();
 }
 
-template<class T>
-Vector<T> Vector<T>::operator+(const Vector& another) const
+template<typename T>
+Vector<T> Vector<T>::operator+(const Vector<T>& another) const
 {
-	Vector<T> result;
-	result.size = this->size + another.size;
-	result.object = new T[result.size];
+	Vector<T> newResult;
+	newResult.size = this->size + another.size;
+	newResult.object = new T[newResult.size];
 	for (size_t i = 0; i < this->size; i++)
 	{
-		result.object[i] = this->object[i];
+		newResult.object[i] = this->object[i];
 	}
 	for (size_t i = 0; i < another.size; i++)
 	{
-		result.object[this->size + i] = another.object[i];
+		newResult.object[this->size + i] = another.object[i];
 	}
 
-	return result;
+	return newResult;
 }
 
-template<class T>
+template<typename T>
 Vector<T>& Vector<T>::operator+=(const Vector<T>& another)
 {
 	T* newBuffer = new T[this->size + another.size];
@@ -114,8 +119,8 @@ Vector<T>& Vector<T>::operator+=(const Vector<T>& another)
 	return *this;
 }
 
-template<class T>
-inline Vector<T>& Vector<T>::deleteAfter(size_t number)
+template<typename T>
+Vector<T>& Vector<T>::deleteAfter(size_t number)
 {
 	this->size = number;
 	T* biggerBuffer = new T[this->size];
@@ -128,21 +133,21 @@ inline Vector<T>& Vector<T>::deleteAfter(size_t number)
 	return *this;
 }
 
-template<class T>
+template<typename T>
 T& Vector<T>::operator[](size_t j)
 {
 	return this->object[j];
 }
 
-template<class T>
-inline void Vector<T>::swap(size_t first, size_t second)
+template<typename T>
+void Vector<T>::swap(size_t first, size_t second)
 {
 	T current = this->object[first];
 	this->object[first] = this->object[second];
 	this->object[second] = current;
 }
 
-template<class T>
+template<typename T>
 void Vector<T>::push(const T& another)
 {
 	T* newBuffer = new T[this->size + 1];
@@ -156,8 +161,7 @@ void Vector<T>::push(const T& another)
 	size++;
 }
 
-
-template<class T>
+template<typename T>
 void Vector<T>::push_back(const T& another)
 {
 	T* newBuffer = new T[this->size + 1];
@@ -171,8 +175,8 @@ void Vector<T>::push_back(const T& another)
 	size++;
 }
 
-template<class T>
-size_t Vector<T>::length() const
+template<typename T>
+size_t Vector<T>::length()
 {
 	return this->size;
 }

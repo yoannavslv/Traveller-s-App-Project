@@ -1,9 +1,12 @@
 #pragma once
 #include<iostream>
+#include "Vector.h"
+#include "Date.h"
+#include "Destination.h"
+
 class User
 {
 private:
-
 	char* userName;
 	char* password;
 	char* email;
@@ -31,4 +34,5 @@ public:
 	friend std::istream& operator>>(std::istream& in, User& current);
 
 };
+
 
