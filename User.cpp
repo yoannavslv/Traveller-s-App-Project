@@ -41,6 +41,14 @@ User::~User()
 	destroy();
 }
 
+User::User(const char* newUserName, const char* newPassword, const char* newEmail, Vector<Destination> newPersonalDestinations)
+{
+	this->setUserName(newUserName);
+	this->setPassword(newPassword);
+	this->setEmail(newEmail);
+	personalDestinations = newPersonalDestinations;
+}
+
 User::User(const char* newUserName, const char* newPassword, const char* newEmail) : userName(nullptr), password(nullptr), email(nullptr)
 {
 	this->setUserName(newUserName);
@@ -97,7 +105,8 @@ std::ostream& operator<<(std::ostream& out, const User& current)
 {
 	out << current.userName << std::endl
 		<< current.password << std::endl
-		<< current.email << std::endl;
+		<< current.email << std::endl
+		<< current.personalDestinations << std::endl;
 
 	return out;
 }
@@ -111,6 +120,7 @@ std::istream& operator>>(std::istream& in, User& current)
 	current.setPassword(text);
 	in >> text;
 	current.setEmail(text);
+
 
 	return in;
 }

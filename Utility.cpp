@@ -1,24 +1,9 @@
-#include "Utility.h"
-#include<cstring>
 #include <iostream>
-#include"Vector.h"
-#include"User.h"
+#include "Utility.h"
+#include<string>
 #include <fstream>
 
 char command[5][18] = { "registration", "login", "friendsList", "averageGrades", "destinationsList"};
-
-Vector<User> fillUsers()
-{
-	Vector<User> users;
-	std::ifstream file("users.db.txt");
-	User current;
-	while (file >> current)
-	{
-		users.push_back(current);
-	}
-	file.close();
-	return users;
-}
 
 size_t Utility::numberOfSymbols(char* text, char symbol)
 {
@@ -100,18 +85,22 @@ Vector<Destination> Utility::fillDestination()
 {
 	Vector<Destination> destinations;
 	std::ifstream file;
-	file.open("destinations.txt", std::ios::app);
+	file.open("destination.txt", std::ios::app);
 	Destination curr;
-	char buff[20];
 	if (file.is_open())
 	{
-		Destination current("Tailand", Date(2, 3, 2019, 5, 3, 2019), 4, "mn qko");
-		destinations.push_back(current);
+		destinations.push_back(curr);
 	}
+	/*
+	while (dest >> curr)
+	{
+		destinations.push_back(curr);
+	}*/
 	file.close();
 	return destinations;
 }
 
+/*
 Vector<Destination> Utility::open(char* path)
 {
 	Vector<Destination> destination;
@@ -124,7 +113,7 @@ Vector<Destination> Utility::open(char* path)
 	file.close();
 	return destination;
 }
-
+*/
 size_t Utility::checkTheOperation(char* text)
 {
 	Vector<char*> part = split(text);
@@ -137,7 +126,7 @@ size_t Utility::checkTheOperation(char* text)
 	}
 	return -1;
 }
-
+/*
 void Utility::save(char* fileName, Vector<Destination>& destinations)
 {
 	std::ofstream file(fileName);
@@ -147,7 +136,7 @@ void Utility::save(char* fileName, Vector<Destination>& destinations)
 	}
 	file.close();
 }
-
+*/
 void Utility::saveUser(Vector<User>& users)
 {
 	std::ofstream file("users.db.txt");
@@ -160,17 +149,12 @@ void Utility::saveUser(Vector<User>& users)
 
 void Utility::saveDestination(Vector<Destination>& destination)
 {
-	std::ofstream file("destinations.txt");
+	std::ofstream file("destination.txt");
 	for (size_t i = 0; i < destination.length(); i++)
 	{
 		file << destination[i];
 	}
 	file.close();
-}
-
-int Utility::averageGrade()
-{
-	return 0;
 }
 
 void Utility::login(char* name, char* pass, Vector<User> users, User curr)
@@ -182,6 +166,7 @@ void Utility::login(char* name, char* pass, Vector<User> users, User curr)
 			std::cout << "Welcome: " << name;
 			curr = users[i];
 			return;
+
 		}
 	}
 
@@ -201,17 +186,33 @@ void Utility::createDataBaseUser(User& current, Destination& destination)
 	dbFile[strlen(current.getUserName()) + 4] = '\0';
 
 	std::ofstream file;
-
+	std::ifstream in("destination.txt");
 	file.open(dbFile, std::ios::app);
-		char buff[20];
+	std::string buff;
 	if (file.is_open())
 	{
-		newDest = destination;
-		//Destination current("Tailand", Date(2, 3, 2019, 5, 3, 2019), 4, "mn qko");
-		file << newDest;
+		while (getline(in, buff))
+		{
+			newDest = destination;
+			file << newDest;
+		}
+		file.close();
 	}
-	
-	file.close();
+	else
+	{
+		std::cout << "unable to open file";
+	}
+}
+
+void Utility::print(Vector<Destination> dest)
+{
+	for (size_t i = 0; i < dest.length(); i++)
+	{
+		std::cout << "Destination: " << dest[i].getDestination() << std::endl;
+		std::cout << "Date: " << dest[i].getTime() << std::endl;
+		std::cout << "Grade: " << dest[i].getGrade() << std::endl;
+		std::cout << "Comment: " << dest[i].getComment() << std::endl;
+	}
 }
 
 /*
@@ -220,13 +221,14 @@ void Utility::addFriend(const User& cuurent, Vector<User> friends)
 	friends.push_back(cuurent);
 }
 
-bool Utility::wasVisited(Destination& current, Vector<User> friends)
+/*
+bool Utility::wasVisited(Destination& current, Vector<User> friends, Vector<Destination> newPersonalDestinations)
 {
 	for (size_t user = 0; user < friends.length(); user++)
 	{
-		for (size_t destinations = 0; destinations < friends[user].visited.length(); destinations++)
+		for (size_t destinations = 0; destinations < friends[user].newPersonalDestinations.length(); destinations++)
 		{
-			if (current == friends[user].visited[destinations])
+			if (current == friends[user].[destinations])
 			{
 				std::cout << "User: " << friends[user].userName << std::endl;
 				std::cout << "Comment: " << friends[user].visited[destinations].getComment() << std::endl;

@@ -10,8 +10,9 @@ int main()
 {
     char command[246];
 
-    User newUser("boris", "leminera2121", "lemineraco@gmail.com");
-    Date newDate(2, 10, 1999, 2, 10, 2000);
+    User current("georgi2", "goshoeqk23", "georgi.b@abv.bg");
+    Date date(2, 10, 1999, 2, 10, 2000);
+    Destination alo("Pleven", date, 4, "amazing place");
     
     Utility functions;
  
@@ -19,10 +20,10 @@ int main()
     //std::cout << users;
 
     Vector<Destination> dest = functions.fillDestination();
+   
 
-    std::cout << dest;
     std::cout << "Welcome to Traveller's app. Choose: registration, login, friendsList, averageGrades, destinationsList" << std::endl;
-    std::cin.getline(command, 2460);
+    std::cin.getline(command, 246);
     char name[68];
     char pass[68];
     if (functions.checkTheOperation(command) == 1)
@@ -37,9 +38,9 @@ int main()
         std::cout << "To save the file and exit please enter EXIT " << std::endl;
         Destination destination;
         std::cin >> destination;
-        functions.createDataBaseUser(newUser, destination);
         dest.push_back(destination);
-        functions.saveDestination(dest); 
+        functions.saveDestination(dest);
+        functions.createDataBaseUser(newUser, destination);   
     }
     else if (functions.checkTheOperation(command) == 2)
     {
@@ -47,7 +48,7 @@ int main()
         std::cin >> name;
         std::cin >> pass;
 
-        functions.login(name, pass, users, newUser);
+        functions.login(name, pass, users, current);
     }
     else if (functions.checkTheOperation(command) == 3)
     {
@@ -59,12 +60,15 @@ int main()
     }
     else if (functions.checkTheOperation(command) == 5)
     {
-        std::ofstream file;
-        file.open("destinations.txt");
-        //Destination print(dest);
+        std::ifstream file;
+        file.open("destination.txt");
+        functions.print(dest);
+        file.close();
     }
     else
     {
         std::cout << "Invalid command. Choose again.";
+ 
     }
 }
+
