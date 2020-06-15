@@ -32,8 +32,8 @@ Destination& Destination::operator=(const Destination& other)
 
 Destination::~Destination()
 {
-	delete[] this->destination;
-	delete[] this->comment;
+	//delete[] this->destination;
+	//delete[] this->comment;
 }
 
 Destination::Destination(const char* newDestination, Date newTime, int newGrade, const char* newComment) : destination(nullptr), comment(nullptr)
@@ -48,7 +48,7 @@ void Destination::setDestination(const char* newDestination)
 {
 	if (newDestination != nullptr)
 	{
-		//delete[] this->destination;
+		delete[] this->destination;
 		this->destination = new char[strlen(newDestination) + 1];
 		strcpy_s(this->destination, strlen(newDestination) + 1, newDestination);
 	}
@@ -73,7 +73,7 @@ void Destination::setComment(const char* newComment)
 {
 	if (newComment != nullptr)
 	{
-		//delete[] this->comment;
+		delete[] this->comment;
 		this->comment = new char[strlen(newComment) + 1];
 		strcpy_s(this->comment, strlen(newComment) + 1, newComment);
 	}
@@ -94,11 +94,6 @@ Date Destination::getTime() const
 	return this->time;
 }
 
-bool Destination::operator==(const Destination& another)
-{
-	return strcmp(this->destination, another.destination) == 0;
-}
-
 std::ostream& operator<<(std::ostream& out, const Destination& current)
 {
 	out << current.destination << std::endl;
@@ -114,13 +109,11 @@ std::ostream& operator<<(std::ostream& out, const Destination& current)
 
 	}
 	out << current.comment << std::endl;
-	//out << current.photos;
 	return out;
 }
 
 std::istream& operator>>(std::istream& in, Destination& current)
 {
-
 	in.get();
 	in.getline(current.destination, 128);
 
@@ -131,19 +124,5 @@ std::istream& operator>>(std::istream& in, Destination& current)
 	in.get();
 	in.getline(current.comment, 128);
 
-	/*
-	char text[64];
-	while (in >> text)
-	{
-		if (strcmp(text, "EXIT") == 0)
-		{
-			break;
-		}
-		else
-		{
-			current.photos.push_back(text);
-		}
-	}
-	*/
 	return in;
 }

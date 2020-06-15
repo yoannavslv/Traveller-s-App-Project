@@ -197,7 +197,15 @@ std::ostream& operator<<(std::ostream& out, const Date& date)
 }
 std::istream& operator>>(std::istream& in, Date& date)
 {
-	in >> date.startDay >> date.startMonth >> date.startYear;
-	in >> date.endDay >> date.endMonth >> date.endYear;
+	in >> date.startDay;
+	in.ignore();
+	in >> date.startMonth;
+	in.ignore(); 
+	in >> date.startYear;
+	in >> date.endDay;
+	in.ignore(); 
+	in >> date.endMonth;
+	in.ignore();
+	in >> date.endYear;
 	return in;
 }

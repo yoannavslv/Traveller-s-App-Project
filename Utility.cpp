@@ -3,7 +3,8 @@
 #include<string>
 #include <fstream>
 
-char command[5][18] = { "registration", "login", "friendsList", "averageGrades", "destinationsList"};
+char command[3][17] = { "registration", "login", "destinationsList"};
+
 
 size_t Utility::numberOfSymbols(char* text, char symbol)
 {
@@ -41,6 +42,7 @@ size_t Utility::index(char* text, char symbol)
 			return i;
 		}
 	}
+	return -1;
 }
 
 size_t Utility::theLastIndex(char* text, char symbol)
@@ -84,59 +86,28 @@ Vector<User> Utility::fillUsers()
 Vector<Destination> Utility::fillDestination()
 {
 	Vector<Destination> destinations;
-	std::ifstream file;
-	file.open("destination.txt", std::ios::app);
-	Destination curr;
-	if (file.is_open())
+	std::ifstream file("destination.txt");
+	Destination current;
+	while (file >> current)
 	{
-		destinations.push_back(curr);
+		destinations.push_back(current);
 	}
-	/*
-	while (dest >> curr)
-	{
-		destinations.push_back(curr);
-	}*/
 	file.close();
 	return destinations;
 }
 
-/*
-Vector<Destination> Utility::open(char* path)
-{
-	Vector<Destination> destination;
-	std::ifstream file(path);
-	Destination current;
-	while (file >> current)
-	{
-		destination.push_back(current);
-	}
-	file.close();
-	return destination;
-}
-*/
 size_t Utility::checkTheOperation(char* text)
 {
-	Vector<char*> part = split(text);
 	for (size_t i = 0; i < 5; i++)
 	{
-		if (strcmp(part[0], command[i]) == 0)
+		if (strcmp(text, command[i]) == 0)
 		{
 			return i + 1;
 		}
 	}
 	return -1;
 }
-/*
-void Utility::save(char* fileName, Vector<Destination>& destinations)
-{
-	std::ofstream file(fileName);
-	for (size_t i = 0; i < destinations.length(); i++)
-	{
-		file << destinations[i];
-	}
-	file.close();
-}
-*/
+
 void Utility::saveUser(Vector<User>& users)
 {
 	std::ofstream file("users.db.txt");
@@ -188,14 +159,10 @@ void Utility::createDataBaseUser(User& current, Destination& destination)
 	std::ofstream file;
 	std::ifstream in("destination.txt");
 	file.open(dbFile, std::ios::app);
-	std::string buff;
 	if (file.is_open())
 	{
-		while (getline(in, buff))
-		{
-			newDest = destination;
-			file << newDest;
-		}
+		newDest = destination;
+		file << newDest;
 		file.close();
 	}
 	else
@@ -209,32 +176,9 @@ void Utility::print(Vector<Destination> dest)
 	for (size_t i = 0; i < dest.length(); i++)
 	{
 		std::cout << "Destination: " << dest[i].getDestination() << std::endl;
-		std::cout << "Date: " << dest[i].getTime() << std::endl;
+		std::cout << "Date: "<<  std::endl;
+		std::cout << dest[i].getTime();
 		std::cout << "Grade: " << dest[i].getGrade() << std::endl;
 		std::cout << "Comment: " << dest[i].getComment() << std::endl;
 	}
 }
-
-/*
-void Utility::addFriend(const User& cuurent, Vector<User> friends)
-{
-	friends.push_back(cuurent);
-}
-
-/*
-bool Utility::wasVisited(Destination& current, Vector<User> friends, Vector<Destination> newPersonalDestinations)
-{
-	for (size_t user = 0; user < friends.length(); user++)
-	{
-		for (size_t destinations = 0; destinations < friends[user].newPersonalDestinations.length(); destinations++)
-		{
-			if (current == friends[user].[destinations])
-			{
-				std::cout << "User: " << friends[user].userName << std::endl;
-				std::cout << "Comment: " << friends[user].visited[destinations].getComment() << std::endl;
-				std::cout << "Grade: " << friends[user].visited[destinations].getGrade();
-			}
-		}
-	}
-}
-*/
