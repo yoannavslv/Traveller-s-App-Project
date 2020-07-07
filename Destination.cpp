@@ -16,7 +16,7 @@ Destination::Destination() : destination(nullptr), comment(nullptr)
 	this->setComment("Default");
 }
 
-Destination::Destination(const Destination& other) : destination(nullptr), comment(nullptr)
+Destination::Destination(const Destination& other)
 {
 	copy(other);
 }
@@ -98,31 +98,25 @@ std::ostream& operator<<(std::ostream& out, const Destination& current)
 {
 	out << current.destination << std::endl;
 	out << current.time;
-
-	if (current.grade >= 1 && current.grade <= 5)
-	{
-		out << current.grade << std::endl;
-	}
-	else
-	{
-		std::cout << "Invalid grade. Try a grade between 1 and 5!" << std::endl;
-
-	}
+	out << current.grade << std::endl;
 	out << current.comment << std::endl;
+	
 	return out;
 }
 
 std::istream& operator>>(std::istream& in, Destination& current)
 {
-	in.get();
-	in.getline(current.destination, 128);
+	char txt[48];
+	in >> txt;
+	current.setDestination(txt);
 
 	in >> current.time;
-
-    in >> current.grade;
+	
+	in >> current.grade;
 
 	in.get();
-	in.getline(current.comment, 128);
+	in.getline(txt, 48);
+	current.setComment(txt);
 
 	return in;
 }

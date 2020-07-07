@@ -12,7 +12,6 @@ private:
 	char* email;
 
 	void copy(const User& other);
-	void destroy();
 
 public:
 	//constructors

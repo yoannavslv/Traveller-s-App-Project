@@ -1,30 +1,35 @@
-ite
-02.03.2020
-10.08.2020
+London
+02.03.2018
+25.05.2018
 3
-ukgjhcbfds
-a, Sofia
+amazing
+Miami
+05.06.2020
+10.11.2020
+2
+not
+Madrid,Spain
 02.03.2020
-10.08.2020
+10.08.2021
 3
+ok
+Atina
+02.03.2020
+10.08.2021
+3
+the
+Pleven<Bulgaria
+05.12.2020
+25.12.2020
+3
+not
+Spain
+02.03.2021
+10.12.2022
+3
+nice but not very good place
+Madrid,Spain
+05.02.2020
+10.08.2020
+6
 amazing place
-rid, Spain
-02.03.2020
-10.08.2020
-5
-Amazing place
-lgum
-07.06.2020
-10.08.2020
-4
-hgfcd
-arcelona
-02.03.2020
-10.08.2020
-3
-amazing place
-Berlin
-02.03.2020
-10.02.2021
-3
-hgfd

@@ -8,12 +8,6 @@ void User::copy(const User& other)
 	this->setEmail(other.email);
 }
 
-void User::destroy()
-{
-	delete[] this->userName;
-	delete[] this->password;
-	delete[] this->email;
-}
 
 User::User() : userName(nullptr), password(nullptr), email(nullptr)
 {
@@ -38,7 +32,9 @@ User& User::operator=(const User& other)
 
 User::~User()
 {
-	destroy();
+	delete[] this->userName;
+	//delete[] this->password;
+	delete[] this->email;
 }
 
 User::User(const char* newUserName, const char* newPassword, const char* newEmail) : userName(nullptr), password(nullptr), email(nullptr)

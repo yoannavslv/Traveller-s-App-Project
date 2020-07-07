@@ -3,7 +3,7 @@
 #include<string>
 #include <fstream>
 
-char command[3][17] = { "registration", "login", "destinationsList"};
+char command[4][17] = { "registration", "login", "destinationsList", "exit"};
 
 
 size_t Utility::numberOfSymbols(char* text, char symbol)
@@ -98,7 +98,7 @@ Vector<Destination> Utility::fillDestination()
 
 size_t Utility::checkTheOperation(char* text)
 {
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < 4; i++)
 	{
 		if (strcmp(text, command[i]) == 0)
 		{
@@ -140,7 +140,7 @@ void Utility::login(char* name, char* pass, Vector<User> users, User curr)
 
 		}
 	}
-
+ 
 	std::cout << "Wrong username or password. Try again!" << std::endl;
 	return;
 }
@@ -165,17 +165,14 @@ void Utility::createDataBaseUser(User& current, Destination& destination)
 		file << newDest;
 		file.close();
 	}
-	else
-	{
-		std::cout << "unable to open file";
-	}
 }
 
-void Utility::print(Vector<Destination> dest)
+void Utility::print(Vector<Destination>& dest)
 {
 	for (size_t i = 0; i < dest.length(); i++)
 	{
-		std::cout << "Destination: " << dest[i].getDestination() << std::endl;
+		std::cout << "Destination: ";
+		std::cout << dest[i].getDestination() << std::endl;
 		std::cout << "Date: "<<  std::endl;
 		std::cout << dest[i].getTime();
 		std::cout << "Grade: " << dest[i].getGrade() << std::endl;

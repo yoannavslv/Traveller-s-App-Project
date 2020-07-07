@@ -22,8 +22,8 @@ public:
 	Vector<T>& deleteAfter(size_t number);
 	T& operator[](size_t j);
 	void swap(size_t first, size_t second);
-	void push(const T& another);
-	void push_back(const T& another);
+	Vector<T>& push(const T& another);
+	Vector<T>& push_back(const T& another);
 	size_t length();
 
 	friend std::ostream& operator<<(std::ostream& out, Vector<T> vector)
@@ -148,7 +148,7 @@ void Vector<T>::swap(size_t first, size_t second)
 }
 
 template<typename T>
-void Vector<T>::push(const T& another)
+Vector<T>& Vector<T>::push(const T& another)
 {
 	T* newBuffer = new T[this->size + 1];
 	newBuffer[0] = another;
@@ -157,12 +157,13 @@ void Vector<T>::push(const T& another)
 		newBuffer[i + 1] = this->object[i];
 	}
 	destroy();
-	this->object = newBuffer;
 	size++;
+	this->object = newBuffer;
+
 }
 
 template<typename T>
-void Vector<T>::push_back(const T& another)
+Vector<T>& Vector<T>::push_back(const T& another)
 {
 	T* newBuffer = new T[this->size + 1];
 	for (size_t i = 0; i < this->size; i++)
@@ -171,8 +172,9 @@ void Vector<T>::push_back(const T& another)
 	}
 	newBuffer[this->size] = another;
 	destroy();
-	this->object = newBuffer;
 	size++;
+	this->object = newBuffer;
+	return *this;
 }
 
 template<typename T>
